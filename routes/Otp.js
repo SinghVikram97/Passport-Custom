@@ -1,6 +1,7 @@
 const route = require("express").Router();
 const Nexmo = require("nexmo");
 const passport = require("passport");
+const { User } = require("../mockdb");
 
 const nexmo = new Nexmo({
   apiKey: "f32d7883",
@@ -43,21 +44,11 @@ route.post("/verify", (req, res) => {
         res.send(err);
       } else {
         if (result && result.status === "0") {
-          req.login(
-            {
-              username: "vikram",
-              password: "test1"
-            },
-            err => {
-              if (err) {
-                console.log("Yes");
-
-                res.send(err);
-              } else {
-                res.redirect("/profile");
-              }
-            }
-          );
+          User.push({
+            id: 128,
+            phoneNumber: 919650498659
+          });
+          res.send("Verified");
         } else {
           res.send("Invalid code or to many tries");
         }

@@ -1,6 +1,7 @@
 const Passport = require("passport");
 const LocalStratergy = require("passport-local").Strategy;
 const GoogleStratergy = require("passport-google-oauth2");
+const CustomStratergy = require("passport-custom");
 const { User } = require("../mockdb");
 
 Passport.serializeUser((user, done) => {
@@ -17,6 +18,7 @@ Passport.deserializeUser((id, done) => {
 
 Passport.use(
   new LocalStratergy((username, password, done) => {
+    console.log(username);
     let found = false;
     for (let i = 0; i < User.length; i++) {
       if (User[i].username === username) {
@@ -27,6 +29,23 @@ Passport.use(
         } else {
           done(null, false);
         }
+      }
+    }
+    if (!found) {
+      done(null, false);
+    }
+  })
+);
+
+Passport.use(
+  new CustomStratergy((req, done) => {
+    let found = false;
+    for (let i = 0; i < User.length; i++) {
+      console.log(User[i].phoneNumber, req.body.phoneNumber);
+      if (User[i].phoneNumber === req.body.phoneNumber) {
+        console.log("Yes");
+        found = true;
+        done(null, User[i]);
       }
     }
     if (!found) {
