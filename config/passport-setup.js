@@ -36,31 +36,33 @@ Passport.use(
 );
 
 Passport.use(
-  new GoogleStratergy({
-    callbackURL: "/profile/google/redirect",
-    clientID:
-      "87837198098-ourd2c8o8k3u7ju0vr7u2juj2i7ke3m.apps.googleusercontent.com",
-    clientSecret: "ORHLub2zYeCuUIhBpFZas6UG"
-  }),
-  (accessToken, refreshToken, profile, done) => {
-    // Check if user already exists in our db
-    let found = false;
-    for (let i = 0; i < User.length; i++) {
-      if (User[i].googleId === profile.id) {
-        found = true;
-        done(null, User[i]);
+  new GoogleStratergy(
+    {
+      callbackURL: "/profile/google/redirect",
+      clientID:
+        "87837198098-ourd2c8o8k3u7ju0vr7u2juj2i7ke3m.apps.googleusercontent.com",
+      clientSecret: "ORHLub2zYeCuUIhBpFZas6UG"
+    },
+    (accessToken, refreshToken, profile, done) => {
+      // Check if user already exists in our db
+      let found = false;
+      for (let i = 0; i < User.length; i++) {
+        if (User[i].googleId === profile.id) {
+          found = true;
+          done(null, User[i]);
+        }
+      }
+      if (found === false) {
+        // Insert into db
+        User.push({
+          username: profile.displayName,
+          googleId: profile.id
+        });
+
+        done(null, User[User.length - 1]);
       }
     }
-    if (found === false) {
-      // Insert into db
-      User.push({
-        username: profile.displayName,
-        googleId: profile.id
-      });
-
-      done(null, User[User.length - 1]);
-    }
-  }
+  )
 );
 
 module.exports = Passport;
