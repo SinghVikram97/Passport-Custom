@@ -5,12 +5,14 @@ const CustomStratergy = require("passport-custom");
 const { User } = require("../mockdb");
 
 Passport.serializeUser((user, done) => {
+  console.log("user", user);
   done(null, user.id);
 });
 
 Passport.deserializeUser((id, done) => {
   for (let i = 0; i < User.length; i++) {
     if (User[i].id === id) {
+      console.log(User[i]);
       done(null, User[i]);
     }
   }

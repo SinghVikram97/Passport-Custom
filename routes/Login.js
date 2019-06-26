@@ -6,13 +6,16 @@ route.get("/", (req, res) => {
 });
 
 // Login via username password
-route.post(
-  "/",
-  passport.authenticate("local", {
-    successRedirect: "/profile",
-    failureRedirect: "/login"
-  })
-);
+route.post("/", passport.authenticate("local"), (req, res) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.redirect("/profile");
+});
 
 // Login via phone number
 route.post(

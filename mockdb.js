@@ -27,3 +27,10 @@ let User = [
 ];
 
 module.exports = { User };
+
+// DB
+/*
+  User Table-> id,username,password,phonenumber
+  Document Table-> id,foreignKey(User.id),documents
+  Details Table->id,foreignKey(User.id),details like region and dept
+*/
