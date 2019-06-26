@@ -7,14 +7,21 @@ route.get("/", (req, res) => {
 
 // Login via username password
 route.post("/", passport.authenticate("local"), (req, res) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
+  res.set("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.set("Access-Control-Request-Method", "GET,PUT,POST,DELETE,OPTIONS");
+  res.set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
+  res.set("Authorization", "vikramsinghbedi");
   res.redirect("/profile");
+});
+
+route.options("/", (req, res) => {
+  res.set("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.set("Access-Control-Request-Method", "GET,PUT,POST,DELETE,OPTIONS");
+  res.set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
+  res.set("Authorization", "vikramsinghbedi");
+  res.status(200).send();
 });
 
 // Login via phone number

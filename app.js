@@ -47,6 +47,15 @@ app.get("/", (req, res) => {
   res.send("HI");
 });
 
+app.options("/", (req, res) => {
+  res.set("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.set("Access-Control-Request-Method", "GET,PUT,POST,DELETE,OPTIONS");
+  res.set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
+  res.set("Authorization", "vikramsinghbedi");
+  res.status(200).send();
+});
+
 app.listen(4444, () => {
   console.log("Server started on http://localhost:4444");
 });

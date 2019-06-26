@@ -1,22 +1,29 @@
 const route = require("express").Router();
 const passport = require("passport");
+const cors = require("cors");
+
+const axios = require("axios");
+
+route.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"]
+  })
+);
 
 route.get("/", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  console.log("req", req);
-  console.log(req.user);
+  res.set("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.set("Access-Control-Request-Method", "GET,PUT,POST,DELETE,OPTIONS");
+  res.set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
+  res.set("Access-Control-Allow-Credentials", true);
+  res.set("Authorization", "vikramsinghbedi");
+  console.log("USER", req.user);
   if (!req.user) {
-    // res.redirect("/login");
-    res.json("Hi");
+    res.redirect("/login");
   } else {
-    console.log(req.user);
-    res.json(req.user);
+    res.send(req.user);
   }
 });
 
