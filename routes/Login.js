@@ -1,25 +1,43 @@
 const route = require("express").Router();
 const passport = require("passport");
+const cors = require("cors");
+
+route.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST", "OPTIONS"]
+  })
+);
 
 route.get("/", (req, res) => {
   res.send("Send login page");
 });
 
 // Login via username password
-route.post("/", passport.authenticate("local"), (req, res) => {
-  res.set("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.set("Access-Control-Request-Method", "GET,PUT,POST,DELETE,OPTIONS");
-  res.set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-  res.set("Access-Control-Allow-Headers", "Content-Type");
-  res.set("Authorization", "vikramsinghbedi");
-  res.redirect("/profile");
-});
+route.post(
+  "/",
+  passport.authenticate("local", {
+    failureRedirect: "http://localhost:3000/sign-in"
+  }),
+
+  (req, res) => {
+    res.set("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.set("Access-Control-Request-Method", "GET,PUT,POST,DELETE,OPTIONS");
+    res.set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+    res.set("Access-Control-Allow-Headers", "Content-Type");
+    res.set("Access-Control-Allow-Credentials", true);
+    res.set("Authorization", "vikramsinghbedi");
+    res.redirect("http://localhost:3000/profile");
+  }
+);
 
 route.options("/", (req, res) => {
   res.set("Access-Control-Allow-Origin", "http://localhost:3000");
   res.set("Access-Control-Request-Method", "GET,PUT,POST,DELETE,OPTIONS");
   res.set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
   res.set("Access-Control-Allow-Headers", "Content-Type");
+  res.set("Access-Control-Allow-Credentials", true);
   res.set("Authorization", "vikramsinghbedi");
   res.status(200).send();
 });
@@ -29,7 +47,7 @@ route.post(
   "/mobile",
   passport.authenticate("custom", {
     successRedirect: "/profile",
-    failureRedirect: "/login"
+    failureRedirect: "http://localhost:3000/sign-in"
   })
 );
 
