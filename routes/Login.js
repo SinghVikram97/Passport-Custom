@@ -54,7 +54,7 @@ route.options("/", (req, res) => {
 route.post(
   "/mobile",
   passport.authenticate("custom", {
-    successRedirect: "/profile",
+    successRedirect: "http://localhost:3000/profile",
     failureRedirect: "http://localhost:3000/sign-in"
   })
 );
