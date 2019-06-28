@@ -14,9 +14,17 @@ route.get("/", (req, res) => {
   res.send("Send login page");
 });
 
+route.post("/", (req, res) => {
+  if (req.body.password) {
+    res.redirect(307, "/login/email");
+  } else {
+    res.redirect(307, "/mobile/register");
+  }
+});
+
 // Login via username password
 route.post(
-  "/",
+  "/email",
   passport.authenticate("local", {
     failureRedirect: "http://localhost:3000/sign-in"
   }),
