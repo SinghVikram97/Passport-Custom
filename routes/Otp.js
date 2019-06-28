@@ -32,6 +32,7 @@ route.post("/register", (req, res) => {
 route.post("/verify", (req, res) => {
   let pin = req.body.pin;
   let reqId = req.body.reqId;
+  let phoneNumber = req.body.phoneNumber;
   console.log(pin);
 
   nexmo.verify.check(
@@ -46,9 +47,9 @@ route.post("/verify", (req, res) => {
         if (result && result.status === "0") {
           User.push({
             id: 128,
-            phoneNumber: 919650498659
+            phoneNumber: phoneNumber
           });
-          res.send("Verified");
+          res.redirect(307, "/login/mobile");
         } else {
           res.send("Invalid code or to many tries");
         }

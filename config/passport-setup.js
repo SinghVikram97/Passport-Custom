@@ -41,11 +41,10 @@ Passport.use(
 
 Passport.use(
   new CustomStratergy((req, done) => {
+    console.log(req.body.phoneNumber);
     let found = false;
     for (let i = 0; i < User.length; i++) {
-      console.log(User[i].phoneNumber, req.body.phoneNumber);
       if (User[i].phoneNumber === req.body.phoneNumber) {
-        console.log("Yes");
         found = true;
         done(null, User[i]);
       }
