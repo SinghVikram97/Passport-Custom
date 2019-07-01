@@ -11,9 +11,10 @@ route.get("/", (req, res) => {
 route.post("/", (req, res) => {
   crypto.randomBytes(20, (err, buf) => {
     let token = buf.toString("hex");
-    let email = req.body.email;
+    console.log(req.body);
+    let { email } = req.body;
 
-    console.log(email);
+    console.log("Email", email);
 
     // Find user with given email
     let found = false;
@@ -26,12 +27,10 @@ route.post("/", (req, res) => {
         break;
       }
     }
-
     if (!found) {
-      res.send("No user found with given email");
-      // res.redirect('/logout')
+      return res.redirect("http://localhost:3001/forgot");
     }
-
+    console.log("HI");
     User[index].resetPasswordToken = token;
     User[index].resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
@@ -56,37 +55,16 @@ route.post("/", (req, res) => {
         "Please click on the following link, or paste this into your browser to complete the process:\n\n" +
         "http://" +
         req.headers.host +
-        "/forgot/" +
+        "/reset/" +
         token +
         "\n\n" +
         "If you did not request this, please ignore this email and your password will remain unchanged.\n"
     };
 
     transporter.sendMail(mailOptions, (err, info) => {
-      res.send(
-        "An e-mail has been sent to " + email + " with further instructions."
-      );
+      res.redirect("http://localhost:3001/resetMsg");
     });
   });
-});
-
-route.get("/:token", (req, res) => {
-  const token = req.params.token;
-
-  // Find user with given password reset token
-
-  let index = -1;
-  for (let i = 0; i < User.length; i++) {
-    if (User[i].resetPasswordToken === token) {
-      index = i;
-      break;
-    }
-  }
-  if (index == -1) {
-    res.send("Invalid request");
-  } else {
-    res.redirect(`/reset/${token}`);
-  }
 });
 
 module.exports = route;

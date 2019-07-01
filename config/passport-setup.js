@@ -22,6 +22,7 @@ Passport.use(
   new LocalStratergy((username, password, done) => {
     console.log(username);
     let found = false;
+    console.log(User[0]);
     for (let i = 0; i < User.length; i++) {
       if (User[i].username === username) {
         found = true;

@@ -26,7 +26,7 @@ route.post("/", (req, res) => {
 route.post(
   "/email",
   passport.authenticate("local", {
-    failureRedirect: "http://localhost:3000/sign-in"
+    failureRedirect: "http://localhost:3001/sign-in"
   }),
 
   (req, res) => {
@@ -36,7 +36,7 @@ route.post(
     res.set("Access-Control-Allow-Headers", "Content-Type");
     res.set("Access-Control-Allow-Credentials", true);
     res.set("Authorization", "vikramsinghbedi");
-    res.redirect("http://localhost:3000/profile");
+    res.redirect("http://localhost:3001/profile");
   }
 );
 
