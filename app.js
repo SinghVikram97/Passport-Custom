@@ -10,6 +10,7 @@ const profileRoute = require("./routes/Profile");
 const logoutRoute = require("./routes/Logout");
 const signupRoute = require("./routes/SignUp");
 const otpRoute = require("./routes/Otp");
+const forgotRoute = require("./routes/Forgot");
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use("/profile", profileRoute);
 app.use("/logout", logoutRoute);
 app.use("/signup", signupRoute);
 app.use("/mobile", otpRoute);
+app.use("/forgot", forgotRoute);
 
 app.get("/", (req, res) => {
   res.send("HI");

@@ -1,7 +1,7 @@
 let User = [
   {
     id: 123,
-    username: "vikram",
+    username: "vikram.bedi98@gmail.com",
     password: "test1"
   },
   {
