@@ -11,6 +11,7 @@ const logoutRoute = require("./routes/Logout");
 const signupRoute = require("./routes/SignUp");
 const otpRoute = require("./routes/Otp");
 const forgotRoute = require("./routes/Forgot");
+const resetRoute = require("./routes/Reset.js");
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use("/logout", logoutRoute);
 app.use("/signup", signupRoute);
 app.use("/mobile", otpRoute);
 app.use("/forgot", forgotRoute);
+app.use("/reset", resetRoute);
 
 app.get("/", (req, res) => {
   res.send("HI");

@@ -13,6 +13,8 @@ route.post("/", (req, res) => {
     let token = buf.toString("hex");
     let email = req.body.email;
 
+    console.log(email);
+
     // Find user with given email
     let found = false;
     let index = -1;
@@ -83,7 +85,7 @@ route.get("/:token", (req, res) => {
   if (index == -1) {
     res.send("Invalid request");
   } else {
-    res.send("Redirecting to password reset page");
+    res.redirect(`/reset/${token}`);
   }
 });
 
