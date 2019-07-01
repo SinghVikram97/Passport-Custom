@@ -68,4 +68,23 @@ route.post("/", (req, res) => {
   });
 });
 
+route.get("/:token", (req, res) => {
+  const token = req.params.token;
+
+  // Find user with given password reset token
+
+  let index = -1;
+  for (let i = 0; i < User.length; i++) {
+    if (User[i].resetPasswordToken === token) {
+      index = i;
+      break;
+    }
+  }
+  if (index == -1) {
+    res.send("Invalid request");
+  } else {
+    res.send("Redirecting to password reset page");
+  }
+});
+
 module.exports = route;
