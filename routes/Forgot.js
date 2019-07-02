@@ -28,7 +28,7 @@ route.post("/", (req, res) => {
       }
     }
     if (!found) {
-      return res.redirect("http://localhost:3001/forgot");
+      return res.redirect("http://localhost:3000/forgot");
     }
     console.log("HI");
     User[index].resetPasswordToken = token;
@@ -62,7 +62,7 @@ route.post("/", (req, res) => {
     };
 
     transporter.sendMail(mailOptions, (err, info) => {
-      res.redirect("http://localhost:3001/resetMsg");
+      res.redirect("http://localhost:3000/resetMsg");
     });
   });
 });

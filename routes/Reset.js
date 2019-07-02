@@ -18,7 +18,7 @@ route.get("/:token", (req, res) => {
     res.send("Invalid request");
   } else {
     req.session.tokenMsg = token;
-    res.redirect(`http://localhost:3001/reset`);
+    res.redirect(`http://localhost:3000/reset`);
   }
 });
 
@@ -53,18 +53,14 @@ route.post("/", (req, res) => {
     });
 
     let mailOptions = {
-      to: User[index].email,
+      to: User[index].username,
       from: "vikram.bedi97@gmail.com",
-      subject: "Your password has changed",
-      text:
-        "Hello,\n\n" +
-        "This is a confirmation that the password for your account " +
-        User[index].email +
-        " has just been changed.\n"
+      subject: "Password Changed",
+      text: "Hi your password has been changed please sign in again to confirm"
     };
 
     transporter.sendMail(mailOptions, (err, info) => {
-      res.send("Your password has changed");
+      res.redirect("http://localhost:3000/sign-in");
     });
   }
 });
